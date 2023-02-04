@@ -6,3 +6,12 @@ header {
     color: rgb(244, 237, 237);
     text-align: center;
 }
+
+ #search-button {
+    color: rgb(60, 13, 213);
+}
+
+div.col-12.currentForecast {
+text-align: center;
+padding-top: 0%;
+}

@@ -1,3 +1,5 @@
+$(document).ready(function (){
+
 // My API Key
 var APIKey =  "f632d71609c01815c6dc91d63186fe2a";
 // The URL to query the database
@@ -12,4 +14,6 @@ $.ajax({
 }).then(function (response) {
     console.log(queryURL);
     console.log(response);
+});
+
 });

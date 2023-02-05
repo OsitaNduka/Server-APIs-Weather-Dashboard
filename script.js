@@ -8,13 +8,38 @@ $(document).ready(function (){
  var searchFormEl = $("#search-form");
  var searchInputEl = $("#search-input");
  var searchButtonEl = $("#search-button");
- var historyEl = ("#history");
+ var historyEl = $("#history");
  var todayEl = $("#today");
  var forecast = $("#forecast");
  var cityEl = $("#city");
  var dateEl = $("#date");
- var weatherEl = $("#weather");
- 
+ var weatherIconEl = $("#weather-icon");
+ var temperatureEl = $("#temperature");
+ var windEl = $("#wind");
+ var humidityEl = $("#humidity");
+
+ //Store searched Cities
+
+ let searchedCities = [];
+
+ //Function to compare Cities and sort them by name alphabetically: (https://www.sitepoint.com/sort-an-array-of-objects-in-javascript/)
+ function compare(a,b) {
+    const cityA = a.city.toUpperCase();
+    const cityB = b.city.toUpperCase();
+    
+    let comparison = 0;
+    if (cityA > cityB) {
+        comparison = 1;
+    } else if (cityA < cityB) {
+        comparison = -1;
+    }
+    return comparison;
+ }
+
+
+
+
+
 
 
  // The URL to query the database

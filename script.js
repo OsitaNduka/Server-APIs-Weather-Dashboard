@@ -23,7 +23,7 @@ $(document).ready(function (){
  let searchedCities = [];
 
  //Function to compare Cities and sort them by name alphabetically: (https://www.sitepoint.com/sort-an-array-of-objects-in-javascript/)
- function compare(a,b) {
+ function compare(a, b) {
     const cityA = a.city.toUpperCase();
     const cityB = b.city.toUpperCase();
     
@@ -36,8 +36,21 @@ $(document).ready(function (){
     return comparison;
  }
 
+  //Function for local storage of searched cities
 
+  function loadCities() {
+    const storedCities = JSON.parse(localStorage.getItem("searchedCities"));
+    if (storedCities) {
+        searchedCities = storedCities;
+    }
+  }
 
+  //Searched cities store in local storage
+
+  function storedCities() {
+    localStorage.setItem("searchedCities", JSON.stringify(searchedCities));
+
+  }
 
 
 
@@ -45,7 +58,17 @@ $(document).ready(function (){
  // The URL to query the database
  var queryURL = "http://api.openweathermap.org/geo/1.0/direct?q=London&limit=5&appid=" +
  APIKey;
+ 
+ var queryURL = "https://api.openweathermap.org/data/2.5/forecast?lat=51.5073219&lon=-0.1276474&appid=" +
+ APIKey;
 
+ // URL for the OpenWeather API call
+ function buildURLFromInputs(city) {
+    if (city) {
+        return "https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}";
+    }
+ }
+ 
  // create an AJAX call
 
     $.ajax({

@@ -102,14 +102,35 @@ $(document).ready(function (){
     console.log(response);
     // Create code to calculate the temperature (converted from Kelvin)
     // to convert from Kelvin to Celsius: C = K -273.15
-    var tempC = response.main.temp - 273.15;
+    //var tempC = response.main.temp - 273.15;
     //store current city in searched cities
     var city = response.name;
     var id = response.id;
 
- })
+    //Remove duplicate cities
+    if (searchedCities[0]{
+        searchedCities = $.grep(searchedCities, function (storedCity){
+            return id !== storedCity.id;
 
+        })
+        searchedCities.unshift({city, id});
+        storedCities();
+        displayCities(searchedCities);
+    }
 
+ });
+
+  //Current weather in DOM elements
+  cityEl.text(response.name);
+  let formattedDate = moment.unix(response.dt).format("L");
+  dateEl.text(formattedDate);
+  let weatherIcon = response.weather[0].icon;
+  weatherIconEl.attr("src", "http://openweathermap.org/img/wn/${weatherIcon}.png").attr("alt", response.weather[0].description);
+  temperatureEl.html(((response.main.temp - 273.15) *1.8 + 32).toFixed(1));
+  humidityEl.text(response.main.humidity);
+  windEl.text((response.wind.speed * 2.237).toFixed(1));
+
+  
  
     
 

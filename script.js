@@ -68,18 +68,50 @@ $(document).ready(function (){
         return "https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}";
     }
  }
+  function buildURLFromId(id) {
+    return "https://api.openweathermap.org/data/2.5/weather?id=${id}&appid=${apiKey}";
+  }
+
+
+  // Function for past 5 searched cities
+
+  function displayCities(searchedCities) {
+    historyEl.empty();
+    searchedCities.splice(5);
+    let sortedCities = [...searchedCities];
+    sortedCities.sort(compare);
+    sortedCities.forEach(function(location) {
+        let cityDiv = $("<div>").addClass("col-12 city");
+        let cityBtn = $("<button>").addClass("btn btn-light city-btn").text(location.city);
+        cityDiv.append(cityBtn);
+        historyEl.append(cityDiv);
+    });
+  }
+ //Function for calling the OpenWeather API for weather conditions
  
+
  // create an AJAX call
 
-    $.ajax({
-       url: queryURL,
-       method: "GET",
-     }).then(function (response) {
-     console.log(queryURL);
-     console.log(response);
+ $.ajax({
+    url: queryURL,
+    method: "GET"
+ }).then(function (response){
+    // create code here to Log the queryUrl
+    console.log(queryURL);
+    // create code here to log the resulting object
+    console.log(response);
+    // Create code to calculate the temperature (converted from Kelvin)
+    // to convert from Kelvin to Celsius: C = K -273.15
+    var tempC = response.main.temp - 273.15;
+    //store current city in searched cities
+    var city = response.name;
+    var id = response.id;
+
+ })
+
+
+ 
     
-    
-    });
 
 
 

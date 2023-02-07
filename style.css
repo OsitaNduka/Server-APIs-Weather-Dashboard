@@ -13,5 +13,14 @@ header {
 
 div.col-12.currentForecast {
 text-align: center;
-padding-top: 0%;
+margin-bottom: 20px;
+background-color: aliceblue;
 }
+
+.div.row {
+flex: 0 0 100%;
+position: relative;
+box-sizing: border-box;
+color: blue;
+}
+

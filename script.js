@@ -215,7 +215,9 @@ $(document).ready(function () {
     console.log("Temperature (C): " + tempC);
   });
 
-    Remove duplicate cities
+    
+   
+   // Remove duplicate cities
     if (searchedCities[0] {
        searchedCities = $.grep(searchedCities, function (storedCity){
          return id !== storedCity.id;

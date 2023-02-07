@@ -8,6 +8,8 @@ It is a weather dashboard that runs in the browser and feature dynamically updat
 
 The weather dashboard will display the weather forecast of the city you searched for and a five day forecast for that city.
 
+https://ositanduka.github.io/Server-APIs-Weather-Dashboard/
+
 ## Usage
 
 When a user searches for a city they are presented with current and future conditions for that city and the city is added to the search history.
@@ -16,6 +18,8 @@ The weather dasboard will also display the name of the city, date, a weather ico
 
 It displays a 5-day forecast with the date a weather condition icon, the temperature and the humidity.
 
+
+![AppScreenshort](Weather%20Dashboard.PNG)
 
 ## Credits
 

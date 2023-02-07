@@ -215,16 +215,16 @@ $(document).ready(function () {
     console.log("Temperature (C): " + tempC);
   });
 
-    //Remove duplicate cities
-    //if (searchedCities[0] {
-       // searchedCities = $.grep(searchedCities, function (storedCity){
-           // return id !== storedCity.id;
+    Remove duplicate cities
+    if (searchedCities[0] {
+       searchedCities = $.grep(searchedCities, function (storedCity){
+         return id !== storedCity.id;
 
-        //});
-        //searchedCities.unshift({city, id});
-        //storedCities();
-        //displayCities(searchedCities);
-    //}
+        });
+        searchedCities.unshift({city, id});
+        storedCities();
+        displayCities(searchedCities);
+    }
 
 
 

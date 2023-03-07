@@ -17,10 +17,13 @@ margin-bottom: 20px;
 background-color: aliceblue;
 }
 
-.div.row {
-flex: 0 0 100%;
-position: relative;
-box-sizing: border-box;
-color: blue;
+.div.col-12.fiveDay {
+display: flex;
+flex-wrap: wrap;
 }
 
+.card-body
+{
+display: flex;
+justify-content: space-around;
+}

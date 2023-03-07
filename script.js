@@ -21,19 +21,19 @@ $(document).ready(function () {
 
   
   //Search button click event
- // $("#search-button").on("click", function (event){
-   // event.preventDefault();
-    //console.log("Submitted City")
-    //let city = searchInputEl.val().trim();
-   // console.log("City: ", city)
-    //city = city.replace(' ' , '%20');
-    //console.log("City: ", city)
+ $("#search-button").on("click", function (event){
+    event.preventDefault();
+    console.log("Submitted City")
+    let city = searchInputEl.val().trim();
+    console.log("City: ", city)
+    city = city.replace(' ' , '%20');
+    console.log("City: ", city)
 
     //Clear the search input
-    //cityInput.val('');
+    searchInputEl.val('');
     //if (city){
       //let queryURL = buildURLFromInputs(city);
-     // searchWeather(queryURL);
+    searchWeather(city);
    // }else{
       //let queryURL = buildURLFromId(id)
     //}
@@ -96,13 +96,17 @@ $(document).ready(function () {
   //                                                               ^
   
   //                                                (ENDPOINT) 
-  let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${51.5073219}&lon=${0.1276474}&appid=${APIkey}`;
+  let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${51.5073219}&lon=${0.1276474}&appid=${APIkey}&units=metric`;
+
   //   
   
   
   
   console.log(" I am code BEFORE the ASYNC operations (API call)")
-  fetch(geoUrl)
+  // this kicks off our FIRST ASYNC Request
+
+function searchWeather(cityName) {
+  fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${APIkey}&units=metric`)
   .then(response => response.json())
   .then(data => {
       console.log(" I am code INSIDE the FIRST ASYNC operations (API call)")
@@ -115,17 +119,69 @@ $(document).ready(function () {
       // These two pieces of DATA we NEED to make the NEXT ASYNC CALL
       
       // SECOND API CALL (Different *** ENDPOINT ***)
-      fetch(forecastUrl)
+      fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIkey}&units=metric`)
       .then(response => response.json())
       .then(data => { 
-          console.log(" I am code INSIDE the SECOND ASYNC operations (API call)")
+         // console.log(" I am code INSIDE the SECOND ASYNC operations (API call)")
           
           console.log(data)   // --< HERE we have DATA that came back from our API request to the ENDPOINT 
           // this Data ^ is ONLY available inside of thie CALLBACK function (the opening and closing { } )
   
+          // Let's Dig into the data that comes back
+          let cityName = data.city.name;
+          cityEl.text(cityName);
+          let windSpeed = data.list[0].wind.speed
+          //console.log("Wind: ", windSpeed);
+          windEl.text(windSpeed)
+
+          let todayDate = data.list[0].dt_txt.split(" ");
+          dateEl.text(todayDate[0]);
+          console.log("Date: ", todayDate);
+
+          let todayTemperature = data.list[0].main.temp;
+          temperatureEl.text(todayTemperature);
+          //console.log("Temp: ", todayTemperature);
+
+          let mainHumidity = data.list[0].main.humidity;
+          humidityEl.text(mainHumidity);
+
+          let weatherIcon = data.list[0].weather[0].icon;
+          weatherIconEl.attr('src', `http://openweathermap.org/img/wn/${weatherIcon}.png`);
+          
           // THIS IS THE POINT WHERE THE FORECAST DATA WE WANT TO DISPLAY EXISTS, MEANING this is where we want to UPDATE the values on the DOM (HTML page)
+           // Transfer content to HTML
+          //$("#city").html("<h2>" + data.city.name + " Weather Details</h2>");
+          //$("#date").html("<h3>" + data.date + "Today date</h3>");
+          //$("#wind").text("Wind Speed: " + data.list[0].wind.speed);
+          //$("#humidity").text("Humidity: " + data.list[0].humidity);
+          
+          // Convert the temp to Celsius
+          //let tempC = data.main.temp - 273.15;
+
+          // add temp content to html
+          //$("#temp").text("Temperature (K) " + data.main.temp);
+          //$("#tempC").text("Temperature (C) " + tempC.toFixed(2));
+          
+          
+
+          // WE need to sort through the data.list ARRAY
+         let forcastData = [];  // we want to endup with 5 RECORDS
+          for(let i = 0; i < data.list.length; i++) {
+              // filter through our list
+             //console.log(data.list[i]);
+
+             //console.log(data.list[i].dt_txt);
+              // add the ones we want to our forscastData ARRAY
+              // I want to pull out each OBJECT in the list with a dt_txt of "03:00:00"
+
+              // Do some data conversion  (STRING.split(' '))  STRING --> ARRAY
+              // "date time"  --> String data type 
+             //["date", "time"]  --> Array (Object) Data type  // Array[1]
+          }
+
       });
   });
+}
   
   
   console.log("I am code AFTER the ASYNC operations (API call)");
@@ -184,7 +240,7 @@ $(document).ready(function () {
   console.log(`Fetching data for ${cityChoice}`);
 
  $.ajax({
-    url: forecastUrl,
+    url: `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}}&lon=${lon}&appid=${APIkey}`,
    method: "GET"
    }).then(function(response) {
     // We store all of the retrieved data inside of an object called "response"
@@ -218,7 +274,7 @@ $(document).ready(function () {
     
    
    // Remove duplicate cities
-    if (searchedCities[0] {
+    if (searchedCities[0]) {
        searchedCities = $.grep(searchedCities, function (storedCity){
          return id !== storedCity.id;
 
@@ -256,17 +312,19 @@ $(document).ready(function () {
       
   //});
 
- //}
+// }
 
 
- //$(document).on("click","button.city-btn", function (event){
-  //let clickedCity = $(this).text();
-  //let foundCity = $.grep(searchedCities, function(storedCity){
-  //return clickedCity === storedCity.city;
-  //})
-  //let queryURL = buildURLFromInputs(foundCity[0].id);
-  //searchWeather(currentWeather);
+   // $(document).on("click","button.city-btn", function (event){
+    //let clickedCity = $(this).text();
+    //let foundCity = $.grep(searchedCities, function(storedCity){
+    //return clickedCity === storedCity.city;
+    //})
+    //let queryURL = buildURLFromInputs(foundCity[0].id);
+   //searchWeather(currentWeather);
  //})
  
+
+};
 
 });
